@@ -21,6 +21,8 @@ public class RocketWeaponScript : MonoBehaviour
 
     public float timeLimit;
 
+    private int objects;
+
     void Update()
     {
 
@@ -31,6 +33,7 @@ public class RocketWeaponScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         explosionTrigger.enabled = true;
+   
         Instantiate(explosion, transform.position, transform.rotation);
         yield return new WaitForSeconds(0.1f);
         Destroy(this.gameObject);
@@ -42,6 +45,7 @@ public class RocketWeaponScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        objects = 0;
         StartCoroutine(delayDestruction());
 
         //timeOut = false;
@@ -53,21 +57,26 @@ public class RocketWeaponScript : MonoBehaviour
 
         GameObject bossScriptObject = GameObject.FindWithTag("EnemyBoss");
         bossScript = bossScriptObject.GetComponent<BossScript>();
+
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
         gameController = gameControllerObject.GetComponent<GameController>();
 
     }
 
 
+
     void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.tag == "EnemyShip" || other.tag == "Enemy" || other.tag == "Asteroid")
         {
            // Instantiate(explosion, transform.position, transform.rotation);
             Destroy(other.gameObject);
+            objects++;
+            Debug.Log("Objects:" + objects);
 
-
+            //gameController.AddScore(objects * 20);
+            //StartCoroutine(giveScore());
         }
 
         if (other.tag == "EnemyBoss")

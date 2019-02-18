@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using InControl;
+using UnityEngine.EventSystems;
 
 
 public class PauseMenuManager : MonoBehaviour
@@ -12,23 +13,34 @@ public class PauseMenuManager : MonoBehaviour
 
     public GameObject GameOverMenu;
 
+    public GameObject restartGameOverMenuButton;
+    public GameObject resumePauseMenuButton;
+
     public bool openMenu = false;
 
     public bool gameOverOpen = false;
 
     private float gameOverWait = 1.5f;
-   // private GameController gameController;
+
+    public EventSystem myEventSystem;
+
+    public EventSystem gameOverEventSystem;
+
+    // private GameController gameController;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameOverEventSystem.enabled = false;
         //anim = GetComponent<Animator>();
         // GameObject UIFaderControllerObject = GameObject.FindWithTag("GameOverMenu");
         //UIFaderController = UIFaderControllerObject.GetComponent<UIFader>();
         Time.timeScale = 1.0f;
         PauseMenu.SetActive(false);
         GameOverMenu.SetActive(false);
+
     }
+
 
 
     public void Restart()
@@ -82,15 +94,33 @@ public class PauseMenuManager : MonoBehaviour
 
     IEnumerator gameOverDelay()
     {
+        myEventSystem.enabled = false;
+        gameOverEventSystem.enabled = true;
         yield return new WaitForSeconds(gameOverWait);
         GameOverMenu.SetActive(true);
+        StartCoroutine(highlightGameOverBtn());
 
-        
        // Time.timeScale = 0.0f;
+    }
+
+    IEnumerator highlightGameOverBtn()
+    {
+        gameOverEventSystem.SetSelectedGameObject(null);
+        yield return null;
+        gameOverEventSystem.SetSelectedGameObject(gameOverEventSystem.firstSelectedGameObject);
+    }
+
+    IEnumerator highlightBtn()
+    {
+        myEventSystem.SetSelectedGameObject(null);
+        yield return null;
+        myEventSystem.SetSelectedGameObject(myEventSystem.firstSelectedGameObject);
     }
     // Update is called once per frame
     void Update()
     {
+      
+
         var InputDevice = InputManager.ActiveDevice;
 
         if (InputDevice.Command.WasPressed && !openMenu)
@@ -98,12 +128,14 @@ public class PauseMenuManager : MonoBehaviour
             openMenu = true;
             PauseMenu.SetActive(true);
             Time.timeScale = 0.0f;
+            StartCoroutine(highlightBtn());
         }
-        else
+
+        else if (InputDevice.Command.WasPressed && openMenu)
         {
+            openMenu = false;
             PauseMenu.SetActive(false);
             Time.timeScale = 1.0f;
-
         }
 
     }

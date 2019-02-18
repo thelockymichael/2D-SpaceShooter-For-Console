@@ -16,6 +16,7 @@ public class BossScript : MonoBehaviour
     public float delay;
 
     private GameController gameController;
+    private PlayerController playerController;
 
     private AudioSource audioSource;
 
@@ -26,6 +27,9 @@ public class BossScript : MonoBehaviour
 
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
          gameController = gameControllerObject.GetComponent<GameController>();
+
+        GameObject playerControllerObject = GameObject.FindWithTag("Player");
+        playerController = playerControllerObject.GetComponent<PlayerController>();
 
         audioSource = GetComponent<AudioSource>();
         InvokeRepeating("Fire", delay, fireRate);
@@ -66,8 +70,15 @@ public class BossScript : MonoBehaviour
         StartCoroutine(delayContinueGame());
         // Set the death flag so this function won't be called again.
        // gameController.Boss = false;
-        
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerController.TakeDamage(200);
+
+        }
     }
 
     IEnumerator delayContinueGame()
