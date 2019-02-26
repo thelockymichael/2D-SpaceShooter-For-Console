@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/Mike/Documents/GitHub/2D-Space-Shooter-ForConsole/2D-SpaceShooter-For-Console/2D Space Shooter/Builds/SpaceShoot-OutPS4/SpaceShoot_Out.exe
+C:/Users/Mike/Documents/GitHub/2D-Space-Shooter-ForConsole/2D-SpaceShooter-For-Console/2D Space Shooter/Builds/SpaceShoot-OutPS402/SpaceShoot_Out.exe
 SceneListBegin?
 Assets/Scenes/mainMenu.unity
 Assets/Scenes/game.unity
