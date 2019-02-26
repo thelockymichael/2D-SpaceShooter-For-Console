@@ -26,11 +26,17 @@ public class PauseMenuManager : MonoBehaviour
 
     public EventSystem gameOverEventSystem;
 
+    private PlayerController playerController;
+
     // private GameController gameController;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        GameObject playerControllerObject = GameObject.FindWithTag("Player");
+        playerController = playerControllerObject.GetComponent<PlayerController>();
+
         gameOverEventSystem.enabled = false;
         //anim = GetComponent<Animator>();
         // GameObject UIFaderControllerObject = GameObject.FindWithTag("GameOverMenu");
@@ -45,20 +51,40 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Restart()
     {
-
+        StartCoroutine(disableArsenal());
        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1.0f;
     }
 
+    public void Resume()
+    {
+        StartCoroutine(disableArsenal());
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
+
+    }
+
+    IEnumerator disableArsenal()
+    {
+        playerController.fromPauseMenu = false;
+        yield return new WaitForSeconds(1f);
+        playerController.fromPauseMenu = true;
+
+    }
+
     public void mainMenu()
     {
+        StartCoroutine(disableArsenal());
         //SceneManager.LoadScene("mainMenu");
         Time.timeScale = 1.0f;
     }
 
     public void Pause()
     {
-      
+    }
+
+    
+      /*
         // PauseMenu.SetActive(true);
         // Time.timeScale = 0.0f;
         if (!openMenu && GameOverMenu)
@@ -69,21 +95,16 @@ public class PauseMenuManager : MonoBehaviour
             Time.timeScale = 0.0f;
             //Pause();
         }
-        else if (openMenu /*&& GameOverMenu*/)
-        {
-            openMenu = false;
-            PauseMenu.SetActive(false);
-            Time.timeScale = 1.0f;
-            //Resume();
-        }
-    }
+        else if (openMenu /*&& GameOverMenu*///)
+//        {
+   //         openMenu = false;
+  //          PauseMenu.SetActive(false);
+  //          Time.timeScale = 1.0f;
+  //          //Resume();
+ //       }
+    
 
-    public void Resume()
-    {
-        PauseMenu.SetActive(false);
-        Time.timeScale = 1.0f;
-
-    }
+ 
 
     public void GameOver()
     {

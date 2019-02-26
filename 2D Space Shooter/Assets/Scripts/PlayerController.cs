@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     public int sumOfEnemies = 0;
 
     public bool rocketShot = false;
+    public bool fromPauseMenu = true;
 
     // Audio
     private AudioSource audio;
@@ -193,39 +194,44 @@ public class PlayerController : MonoBehaviour
         var InputDevice = InputManager.ActiveDevice;
 
 
-        if (InputDevice.Action1.WasPressed && Time.time > nextFire && !FirePowerIsActive)
+        if (fromPauseMenu)
         {
-            nextFire = Time.time + fireRate;
 
-           
-                Instantiate(shot, shotSpawns[0].position, shotSpawns[0].rotation);
-            
-            audio.Play();
-
-            // Debug.Log(audio);
-
-        }
-
-        else if (InputDevice.Action1.WasPressed && Time.time > nextFire && FirePowerIsActive)
-        {
-            nextFire = Time.time + fireRate;
-
-
-            foreach (var shotSpawn in shotSpawns)
+            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive))
             {
-                Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+                nextFire = Time.time + fireRate;
+
+
+                Instantiate(shot, shotSpawns[0].position, shotSpawns[0].rotation);
+
+                audio.Play();
+
+                // Debug.Log(audio);
+
             }
-            audio.Play();
-            // Debug.Log(audio);
-        }
 
-        else if (InputDevice.Action2.WasPressed)
-        {
-            ShootRocket();
-            audio.Play();
-            // Debug.Log(audio);
-        }
+            else if (InputDevice.Action1.WasPressed && (Time.time > nextFire && FirePowerIsActive))
+            {
+                nextFire = Time.time + fireRate;
 
+
+                foreach (var shotSpawn in shotSpawns)
+                {
+                    Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+                }
+                audio.Play();
+                // Debug.Log(audio);
+            }
+
+            else if (InputDevice.Action2.WasPressed)
+            {
+                ShootRocket();
+                audio.Play();
+                // Debug.Log(audio);
+            }
+
+
+        }
 
 
         // If the player has just been damaged...
