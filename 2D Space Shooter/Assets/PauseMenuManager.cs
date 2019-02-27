@@ -67,7 +67,7 @@ public class PauseMenuManager : MonoBehaviour
     IEnumerator disableArsenal()
     {
         playerController.fromPauseMenu = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.01f);
         playerController.fromPauseMenu = true;
 
     }

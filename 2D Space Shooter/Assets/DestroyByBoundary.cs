@@ -37,7 +37,6 @@ public class DestroyByBoundary : MonoBehaviour
                  "Enemy",
                  "Asteroid",
                  "EnemyShip"
-               
              };
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
         // Debug.Log(enemies.Length);

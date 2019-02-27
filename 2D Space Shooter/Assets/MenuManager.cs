@@ -35,6 +35,12 @@ public class MenuManager : MonoBehaviour
         //SceneManager.LoadScene("game");
     }
 
+    public void QuitToDesktop()
+    {
+        Application.Quit();
+        //SceneManager.LoadScene("game");
+    }
+
     public void Pause()
     {
         // PauseMenu.SetActive(true);
