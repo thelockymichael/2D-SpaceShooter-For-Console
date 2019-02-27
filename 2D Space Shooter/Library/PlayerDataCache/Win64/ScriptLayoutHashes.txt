@@ -27,7 +27,7 @@ e7a73f5f78ba6445195ec23b74a1ce2d Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventH
 71bb6a6b6c8f052f948db64c7dd3ca4f InControl.dll:InControl.UnityInputDeviceProfileList
 d3bbd1f86b55a6168b664522b2cf57b3 Assembly-CSharp.dll:.Done_DestroyByTime
 02493766ba0d073bd9e5d602a5878d4f Assembly-CSharp-firstpass.dll:.iTween
-7922482986d9a01f5d3de3ddd6c7b836 Assembly-CSharp.dll:.MenuManager
+c1a24ba79c9924e64b766bf61c26be6e Assembly-CSharp.dll:.MenuManager
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
 cf9f5cf2c3145a37ac07f00e50e460f9 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput

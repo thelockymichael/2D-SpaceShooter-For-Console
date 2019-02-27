@@ -19,10 +19,13 @@ public class MenuManager : MonoBehaviour
 
     public EventSystem optionsEventSystem;
 
+    public EventSystem storyEventSystem;
+
     IEnumerator optionsDelay()
     {
         myEventSystem.enabled = false;
         optionsEventSystem.enabled = true;
+
         yield return new WaitForSeconds(0.2f);
         settingsMenu.SetActive(true);
         mainMenu.SetActive(false);
@@ -35,10 +38,26 @@ public class MenuManager : MonoBehaviour
     {
         myEventSystem.enabled = true;
         optionsEventSystem.enabled = false;
+        storyEventSystem.enabled = false;
+
         yield return new WaitForSeconds(0.2f);
         settingsMenu.SetActive(false);
+        storyImage.SetActive(false);
         mainMenu.SetActive(true);
         StartCoroutine(highlightBtn());
+
+        // Time.timeScale = 0.0f;
+    }
+
+    IEnumerator storyDelay()
+    {
+        myEventSystem.enabled = false;
+        optionsEventSystem.enabled = false;
+        storyEventSystem.enabled = true;
+        yield return new WaitForSeconds(0.2f);
+        storyImage.SetActive(true);
+        mainMenu.SetActive(false);
+        StartCoroutine(highlightStoryBtn());
 
         // Time.timeScale = 0.0f;
     }
@@ -56,10 +75,20 @@ public class MenuManager : MonoBehaviour
         yield return null;
         myEventSystem.SetSelectedGameObject(myEventSystem.firstSelectedGameObject);
     }
+
+    IEnumerator highlightStoryBtn()
+    {
+        storyEventSystem.SetSelectedGameObject(null);
+        yield return null;
+        storyEventSystem.SetSelectedGameObject(storyEventSystem.firstSelectedGameObject);
+    }
+
     void Start()
     {
+        storyImage.SetActive(false);
         settingsMenu.SetActive(false);
         optionsEventSystem.enabled = false;
+        storyEventSystem.enabled = false;
 
         //anim = GetComponent<Animator>();
         storyImage.SetActive(false);
@@ -74,8 +103,9 @@ public class MenuManager : MonoBehaviour
     }
     public void Story()
     {
-        storyImage.SetActive(false);
-        settingsMenu.SetActive(false);
+        StartCoroutine(storyDelay());
+       //storyImage.SetActive(false);
+        //settingsMenu.SetActive(false);
 
         //SceneManager.LoadScene("game");
     }
