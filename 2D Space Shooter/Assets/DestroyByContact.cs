@@ -7,6 +7,8 @@ public class DestroyByContact : MonoBehaviour
     public int healthBonus = 20;
 
     public GameObject explosion;
+    public GameObject explosionForDestroyAllPowerUp;
+
     public GameObject playerExplosion;
     public int scoreValue;
     private GameController gameController;
@@ -46,6 +48,12 @@ public class DestroyByContact : MonoBehaviour
         }*/
     }
 
+    public void enemiesExplode()
+    {
+        Instantiate(this.explosionForDestroyAllPowerUp, this.transform.position, this.transform.rotation);
+        Destroy(this.gameObject);
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Boundary" || other.CompareTag ("Asteroid") || other.CompareTag("EnemyBoss") || other.CompareTag("EnemyShip") || other.CompareTag("Enemy") || other.CompareTag("Rocket"))
@@ -53,7 +61,7 @@ public class DestroyByContact : MonoBehaviour
             return;
         }
 
-        if(explosion != null)
+        if(explosion != null || explode)
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
