@@ -41,14 +41,15 @@ public class DestroyByBoundary : MonoBehaviour
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
         // Debug.Log(enemies.Length);
         int i = tagsToDisable.Length;
-        gameController.AddScore(i * 20);
+        gameController.AddScore(i * 2);
         foreach (string tag in tagsToDisable)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(tag);
             i++;                                    //Increment loop
             foreach (GameObject gameObj in gameObjects)
             {
-                Destroy(gameObj);
+                gameObj.GetComponent<DestroyByContact>().enemiesExplode();
+              //  Destroy(gameObj);
             }
             //Debug.Log("EMEMIES = " + (i));
             if (i == 0)
@@ -105,7 +106,7 @@ public class DestroyByBoundary : MonoBehaviour
         {
 
             explosions();
-            Destroy(other.gameObject);
+           // Destroy(other.gameObject);
             StartCoroutine(destroyAllDelay());
         }
         /*  if (destroyAll)
@@ -118,7 +119,7 @@ public class DestroyByBoundary : MonoBehaviour
 
     IEnumerator destroyAllDelay()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.1f);
         destroyAll = false;
         // destroyAllDisable();
     }
