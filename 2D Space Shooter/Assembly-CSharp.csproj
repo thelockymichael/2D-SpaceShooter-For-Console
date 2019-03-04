@@ -81,6 +81,10 @@
     <Compile Include="Assets\EvasiveManeuverBoss.cs" />
     <Compile Include="Assets\Fade.cs" />
     <Compile Include="Assets\FadeScreen.cs" />
+    <Compile Include="Assets\Fx Explosion Pack\Script\csDemoScenceControl.cs" />
+    <Compile Include="Assets\Fx Explosion Pack\Script\csLightControl.cs" />
+    <Compile Include="Assets\Fx Explosion Pack\Script\csMouseOrbit.cs" />
+    <Compile Include="Assets\Fx Explosion Pack\Script\DestroyEffect.cs" />
     <Compile Include="Assets\GameController.cs" />
     <Compile Include="Assets\LevelLoader.cs" />
     <Compile Include="Assets\MenuManager.cs" />

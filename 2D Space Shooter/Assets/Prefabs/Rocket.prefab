@@ -91,7 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7d0b6286df00d46a0a2f6a6f6bc136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 3}
+  explosion: {fileID: 3029512593545383815, guid: 9c8478c78b1dd894bacf52901d3715db,
+    type: 3}
+  rocketExplosion: {fileID: 0}
   explosionTrigger: {fileID: 4328640764290155177}
   timeLimit: 0.8
 --- !u!135 &4328640764290155177
@@ -103,9 +105,9 @@ SphereCollider:
   m_GameObject: {fileID: 37692940212917539}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &37692940312274858
 PrefabInstance:

@@ -10,6 +10,8 @@ public class RocketWeaponScript : MonoBehaviour
 
     public GameObject explosion;
 
+    public GameObject rocketExplosion;
+
     public Collider explosionTrigger;
 
 
@@ -67,8 +69,21 @@ public class RocketWeaponScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Collider[] hits = Physics.OverlapSphere(transform.position, 7);
 
-        if (other.tag == "EnemyShip" || other.tag == "Enemy" || other.tag == "Asteroid")
+        //int i = hits.Length;
+        //gameController.AddScore(i * 20);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.tag == "Enemy" || hit.tag == "EnemyShip" || hit.tag == "Asteroid")
+            {
+                Destroy(hit.gameObject);
+            }
+        }
+
+
+        /*if (other.tag == "EnemyShip" || other.tag == "Enemy" || other.tag == "Asteroid")
         {
            // Instantiate(explosion, transform.position, transform.rotation);
             Destroy(other.gameObject);
@@ -77,7 +92,7 @@ public class RocketWeaponScript : MonoBehaviour
 
             //gameController.AddScore(objects * 20);
             //StartCoroutine(giveScore());
-        }
+        }*/
 
         if (other.tag == "EnemyBoss")
         {

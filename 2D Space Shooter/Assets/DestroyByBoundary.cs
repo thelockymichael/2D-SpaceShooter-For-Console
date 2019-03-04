@@ -16,6 +16,9 @@ public class DestroyByBoundary : MonoBehaviour
 
     public GameObject enemyPrefab;
     public GameObject[] enemies;
+
+    public GameObject destroyAllExplosion;
+
     private void Update()
     {
         if (enemies == null)
@@ -23,8 +26,19 @@ public class DestroyByBoundary : MonoBehaviour
         }
     }
 
-    
-    public void explosions()
+    void Explosion(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        int i = 0;
+        while (i < hitColliders.Length)
+        {
+            hitColliders[i].SendMessage("AddDamage");
+            i++;
+        }
+    }
+
+
+public void explosions()
     {
         /* int vihu = 0;
          vihu++;
@@ -45,11 +59,11 @@ public class DestroyByBoundary : MonoBehaviour
         foreach (string tag in tagsToDisable)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(tag);
-            i++;                                    //Increment loop
+                                                //Increment loop
             foreach (GameObject gameObj in gameObjects)
             {
-                gameObj.GetComponent<DestroyByContact>().enemiesExplode();
-              //  Destroy(gameObj);
+               // gameObj.GetComponent<DestroyByContact>().enemiesExplode();
+               Destroy(gameObj);
             }
             //Debug.Log("EMEMIES = " + (i));
             if (i == 0)
@@ -72,43 +86,26 @@ public class DestroyByBoundary : MonoBehaviour
 
         destroyByContactObject = GameObject.FindGameObjectsWithTag("Enemy");
 
-        /*
-        objs = GameObject.FindGameObjectsWithTag("LightUser");
-        foreach (GameObject lightuser in objs)
-        {
-            lightuser.GetComponent<Light>().enabled = false;
-        }*/
-        /*
-       GameObject destroyByContactObject = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject destroy in destroyByContactObject)
-        {
-            destroyByContactController = destroyByContactObject.GetComponent<DestroyByContact>();
-
-        }*/
-        /*
-        destroyByContactController = GameObject.FindGameObjectsWithTag("Enemy");
-
-        destroyByContactObject = destroyByContactController.GetComponent<GameController>();
-        */
-        /*
-        foreach (GameObject respawn in destroyByContactController)
-        {
-
-            //Instantiate(respawnPrefab, respawn.transform.position, respawn.transform.rotation);
-        }*/
-        // destroyByContactController = destroyByContactObject.GetComponent<DestroyByContact>();
     }
 
     public void OnTriggerStay(Collider other)
-    {
-
-        if ((other.tag == "Enemy" || other.tag == "EnemyShip" || other.tag == "Asteroid") && destroyAll)
+    {   if ((other.tag == "Enemy" || other.tag == "EnemyShip" || other.tag == "Asteroid") && destroyAll)
         {
 
             explosions();
            // Destroy(other.gameObject);
             StartCoroutine(destroyAllDelay());
         }
+
+        /*
+        if ((other.tag == "Enemy" || other.tag == "EnemyShip" || other.tag == "Asteroid") && destroyAll)
+        {
+
+            explosions();
+           // Destroy(other.gameObject);
+            StartCoroutine(destroyAllDelay());
+        }*/
+
         /*  if (destroyAll)
           {
               explosions();
@@ -119,7 +116,10 @@ public class DestroyByBoundary : MonoBehaviour
 
     IEnumerator destroyAllDelay()
     {
-        yield return new WaitForSeconds(0.1f);
+        destroyAllExplosion.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        destroyAllExplosion.SetActive(false);
+
         destroyAll = false;
         // destroyAllDisable();
     }
