@@ -17,18 +17,21 @@ public class LevelLoader : MonoBehaviour
     AsyncOperation async;
 
     private float speed = 1.0f;
-    public string scene;
     public Color loadToColor = Color.black;
 
     public void LoadLevel(int sceneIndex)
     {
+        Debug.Log("DO SOMETHING");
+
         StartCoroutine(delayLoading(sceneIndex));
 
     }
 
     IEnumerator delayLoading(int sceneIndex)
     {
-        Initiate.Fade(scene, loadToColor, speed);
+        Debug.Log("DO SOMETHING02");
+
+        //  Initiate.Fade(scene, loadToColor, speed);
         yield return new WaitForSeconds(speed);
         StartCoroutine(LoadAsynchronously(sceneIndex));
     }
@@ -38,9 +41,11 @@ public class LevelLoader : MonoBehaviour
         loadingScreen.SetActive(false);
         loadPanel.SetActive(false);
     }
-
+    
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
+        Debug.Log("DO SOMETHING03");
+
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
         loadingScreen.SetActive(true);

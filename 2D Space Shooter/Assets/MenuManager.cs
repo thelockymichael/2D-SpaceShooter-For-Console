@@ -24,6 +24,8 @@ public class MenuManager : MonoBehaviour
     IEnumerator optionsDelay()
     {
         myEventSystem.enabled = false;
+        storyEventSystem.enabled = false;
+
         optionsEventSystem.enabled = true;
 
         yield return new WaitForSeconds(0.2f);
@@ -51,9 +53,12 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator storyDelay()
     {
+
+        Debug.Log("ACTIVATE SOTRY");
         myEventSystem.enabled = false;
         optionsEventSystem.enabled = false;
         storyEventSystem.enabled = true;
+
         yield return new WaitForSeconds(0.2f);
         storyImage.SetActive(true);
         mainMenu.SetActive(false);
@@ -78,6 +83,8 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator highlightStoryBtn()
     {
+        Debug.Log("ACTIVATE SOTRY");
+
         storyEventSystem.SetSelectedGameObject(null);
         yield return null;
         storyEventSystem.SetSelectedGameObject(storyEventSystem.firstSelectedGameObject);
@@ -91,7 +98,6 @@ public class MenuManager : MonoBehaviour
         storyEventSystem.enabled = false;
 
         //anim = GetComponent<Animator>();
-        storyImage.SetActive(false);
        // UIFaderController = GetComponent<UIFader>();
        // GameObject UIFaderControllerObject = GameObject.FindWithTag("GameOverMenu");
         //UIFaderController = UIFaderControllerObject.GetComponent<UIFader>();
@@ -99,7 +105,7 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
-        //SceneManager.LoadScene("game");
+        SceneManager.LoadScene("game");
     }
     public void Story()
     {
@@ -139,28 +145,7 @@ public class MenuManager : MonoBehaviour
         // storyImage.SetActive(false);
     }
 
-    public void Pause()
-    {
-        // PauseMenu.SetActive(true);
-        // Time.timeScale = 0.0f;
-        if (!openMenu /*&& !GameOverMenu*/)
-        {
-
-            openMenu = true;
-            storyImage.SetActive(true);
-            Time.timeScale = 0.0f;
-            Debug.Log("Menu open");
-            //Pause();
-        }
-        else if (openMenu /*&& GameOverMenu*/)
-        {
-            openMenu = false;
-            storyImage.SetActive(false);
-            Time.timeScale = 1.0f;
-            Debug.Log("Menu close");
-            //Resume();
-        }
-    }
+ 
 
     // Update is called once per frame
     void Update()

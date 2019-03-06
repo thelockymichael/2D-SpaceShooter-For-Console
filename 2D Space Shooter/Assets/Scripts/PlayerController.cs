@@ -21,12 +21,20 @@ public class PlayerController : MonoBehaviour
     private float timer;
     private float timeAgain = 10f;
 
+
     private float innerTimer;
 
     public float timeLimit;
     public float aikaLoppuuLimit = 10f;
 
     public bool FirePowerIsActive = false;
+    public bool FlameThrowerIsActive = false;
+
+    private float firePowerTimer = 5;
+    private float initialFirePowerTimer = 5;
+
+    private float flameThrowerTimer = 5;
+    private float initialFlameThrowerTimer = 5;
 
     //Health
 
@@ -49,6 +57,8 @@ public class PlayerController : MonoBehaviour
     public Transform[] shotSpawns;
     public Transform rocketSpawn;
     public GameObject rocket;
+    public GameObject flameThrower;
+
 
     public float fireRate;
 
@@ -131,8 +141,17 @@ public class PlayerController : MonoBehaviour
 
     public void GainFirePower()
     {
+        gameController.startPowerUpTimer = enabled;
+        Debug.Log("GAIN FIRE POWER");
         FirePowerIsActive = true;
 
+    }
+
+    public void GainFlameThrower()
+    {
+        gameController.startPowerUpTimer = enabled;
+        Debug.Log("GAIN FLAME THROWER");
+        FlameThrowerIsActive = true;
     }
 
     void Death()
@@ -145,17 +164,32 @@ public class PlayerController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    IEnumerator StopSpeedUp()
+    IEnumerator StopSpeedUpFlameThrower()
     {
         yield return new WaitForSeconds(10.0f); // the number corresponds to the nuber of seconds the speed up will be applied
-        TimeOut();
+        TimeOutFlameThrower();
     }
 
+    IEnumerator StopSpeedUpFirePower()
+    {
+        yield return new WaitForSeconds(10.0f); // the number corresponds to the nuber of seconds the speed up will be applied
+        TimeOutFirePower();
+    }
 
-    void TimeOut()
+    void TimeOutFirePower()
     {
         //timeAgain = timeLimit;
         FirePowerIsActive = false;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        timeOut = false;
+        Debug.Log(Mathf.Round(timeLimit));
+    }
+
+
+    void TimeOutFlameThrower()
+    {
+        //timeAgain = timeLimit;
+        FlameThrowerIsActive = false;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         timeOut = false;
         Debug.Log(Mathf.Round(timeLimit));
@@ -179,6 +213,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+      
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -186,10 +221,17 @@ public class PlayerController : MonoBehaviour
             Death();
         }
 
+        /*
         if (FirePowerIsActive)
         {
-            StartCoroutine(StopSpeedUp());
+            StartCoroutine(StopSpeedUpFirePower());
         }
+        */
+
+        /*if (FlameThrowerIsActive)
+        {
+            StartCoroutine(StopSpeedUpFlameThrower());
+        }*/
 
         var InputDevice = InputManager.ActiveDevice;
 
@@ -197,10 +239,9 @@ public class PlayerController : MonoBehaviour
         if (fromPauseMenu)
         {
 
-            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive))
+            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
-
 
                 Instantiate(shot, shotSpawns[0].position, shotSpawns[0].rotation);
 
@@ -210,7 +251,21 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            else if (InputDevice.Action1.WasPressed && (Time.time > nextFire && FirePowerIsActive))
+            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive && FlameThrowerIsActive))
+            {
+                nextFire = Time.time + fireRate;
+
+
+                GameObject myNewSmoke = Instantiate(flameThrower, shotSpawns[0].position, shotSpawns[0].rotation);
+
+                myNewSmoke.transform.parent = gameObject.transform;
+
+                audio.Play();
+                // Debug.Log(audio);
+            }
+
+
+            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
 
@@ -222,6 +277,7 @@ public class PlayerController : MonoBehaviour
                 audio.Play();
                 // Debug.Log(audio);
             }
+
 
             else if (InputDevice.Action2.WasPressed)
             {

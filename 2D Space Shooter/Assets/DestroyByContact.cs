@@ -18,6 +18,7 @@ public class DestroyByContact : MonoBehaviour
 
     public bool isPowerUpHealth;
     public bool isFirePower;
+    public bool isFlameThrower;
     public bool isDestroyAll;
 
     public bool explode = false;
@@ -61,9 +62,18 @@ public class DestroyByContact : MonoBehaviour
             return;
         }
 
-        if(explosion != null || explode)
+        if(explosion != null || other.tag == "Player")
         {
             Instantiate(explosion, transform.position, transform.rotation);
+        }
+
+        if (other.tag == "FlameThrower")
+        {
+            gameController.AddScore(scoreValue);
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(this.gameObject);
+            return;
+            
         }
 
         if (other.tag == "Player" && isPowerUpHealth)
@@ -80,6 +90,17 @@ public class DestroyByContact : MonoBehaviour
         if (other.tag == "Player" && isFirePower)
         {
             playerController.GainFirePower();
+            Destroy(this.gameObject);
+            /*
+            gameController.GameOver();
+            PauseMenuManager.GameOver();
+            Destroy(other.gameObject);
+            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
+        }
+
+        if (other.tag == "Player" && isFlameThrower)
+        {
+            playerController.GainFlameThrower();
             Destroy(this.gameObject);
             /*
             gameController.GameOver();
@@ -115,7 +136,7 @@ public class DestroyByContact : MonoBehaviour
         {
             gameController.AddScore(scoreValue);
             Destroy(other.gameObject);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
        
     }

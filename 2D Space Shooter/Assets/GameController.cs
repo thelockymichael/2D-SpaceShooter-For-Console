@@ -22,6 +22,18 @@ public class GameController : MonoBehaviour
     public Text gameOverText;
     public Text waveCounter;
     public Text bossIncoming;
+    public Text powerUpTimerText;
+
+    // PowerUp timer variables
+    private bool powerUpTimeOut;
+    private float powerUpTimer = 5f;
+    public float firstPowerUpTimer = 5f;
+
+    private float powerUpTimerLimit = 5f;
+
+    public bool startPowerUpTimer;
+
+    private float innerTimer;
 
     // Rocket Launcher
     public GameObject rocketIcon;
@@ -45,6 +57,10 @@ public class GameController : MonoBehaviour
     private PlayerController playerController;
     void Start()
     {
+        powerUpTimeOut = false;
+        //powerUpTimer = 0f;
+
+        powerUpTimerText.text = "";
         rocketIcon.SetActive(false);
         AudioSource audio = GetComponent<AudioSource>();
 
@@ -80,6 +96,37 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        if (powerUpTimeOut)
+        {
+            Debug.Log("TIME OUT");
+            startPowerUpTimer = false;
+            powerUpTimeOut = false;
+
+            powerUpTimerText.text = "";
+            firstPowerUpTimer = powerUpTimer;
+            playerController.FlameThrowerIsActive = false;
+            playerController.FirePowerIsActive = false;
+
+        }
+        // return lat > 0 ? 'summer' : 'winter';
+
+        if (startPowerUpTimer)
+        {
+            
+         //   Mathf.RoundToInt(powerUpTimer);
+
+            powerUpTimerText.text = Mathf.RoundToInt(firstPowerUpTimer).ToString();
+            // powerUpTimer = 5f;
+            firstPowerUpTimer -= Time.deltaTime;
+
+            if (firstPowerUpTimer < 0)
+            {
+                powerUpTimeOut = true;
+            }
+
+        }
+
+
         if (restart)
         {
             if (Input.GetKeyDown(KeyCode.R))

@@ -18,6 +18,7 @@ TagManager:
   - Asteroid
   - RocketAnim
   - Rocket
+  - FlameThrower
   layers:
   - Default
   - TransparentFX

@@ -88,6 +88,7 @@
     <Compile Include="Assets\GameController.cs" />
     <Compile Include="Assets\LevelLoader.cs" />
     <Compile Include="Assets\MenuManager.cs" />
+    <Compile Include="Assets\MenuManager02.cs" />
     <Compile Include="Assets\Mover.cs" />
     <Compile Include="Assets\PauseMenuManager.cs" />
     <Compile Include="Assets\PlayerBoltScript.cs" />
