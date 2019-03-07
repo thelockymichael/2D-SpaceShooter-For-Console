@@ -271,6 +271,7 @@ a4f0a4f62100f1a4fb5cbe0e00dde83f Unity.TextMeshPro.dll:TMPro.TextMeshProUGUI
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp-firstpass.dll:.RotateSample
 cd427e5890d25df690c5dda92993d4a3 Assembly-CSharp.dll:.csDemoScenceControl
 5fc094978ce3e3591a7500ed380d854a Unity.Analytics.DataPrivacy.dll:UnityEngine.Analytics.DataPrivacyButton
+48896284754d2f40465e227fd55deb55 Assembly-CSharp.dll:.MenuManager02
 813a98d7c38886af7cdb0e991a546577 Assembly-CSharp.dll:.RandomRotator
 d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 d1f07c9e64b7817e6271f80bb03de25f InControl.Examples.dll:MultiplayerBasicExample.PlayerManager
@@ -363,4 +364,3 @@ ae91c545dea6ac849dd81c4b660c68ca Vuforia.UnityExtensions.dll:Vuforia.VuforiaConf
 fbbf64dcbe0662e3eda1dec45ea8f895 Vuforia.UnityExtensions.dll:Vuforia.WireframeBehaviour
 71bb6a6b6c8f052f948db64c7dd3ca4f Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 96579b1d7c32aebb6c65db101ee7a10b Assembly-CSharp.dll:.Done_GameController
-48896284754d2f40465e227fd55deb55 Assembly-CSharp.dll:.MenuManager02

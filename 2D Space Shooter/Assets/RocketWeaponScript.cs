@@ -48,7 +48,7 @@ public class RocketWeaponScript : MonoBehaviour
     void Start()
     {
         objects = 0;
-        StartCoroutine(delayDestruction());
+       StartCoroutine(delayDestruction());
 
         //timeOut = false;
         // timer = 0f;
@@ -71,9 +71,6 @@ public class RocketWeaponScript : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, 7);
 
         int i = 0;
-        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        gameController = gameControllerObject.GetComponent<GameController>();
-        gameController.AddScore(i * 20);
 
         //int i = hits.Length;
         //gameController.AddScore(i * 20);
@@ -82,14 +79,17 @@ public class RocketWeaponScript : MonoBehaviour
         {
             if (hit.tag == "Enemy" || hit.tag == "EnemyShip" || hit.tag == "Asteroid")
             {
-
+           
                 Debug.Log(i);
                 i++;
 
                 Destroy(hit.gameObject);
             }
-        }
 
+        }
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        gameController = gameControllerObject.GetComponent<GameController>();
+        gameController.AddScore(i * 20);
         /*if (other.tag == "EnemyShip" || other.tag == "Enemy" || other.tag == "Asteroid")
         {
            // Instantiate(explosion, transform.position, transform.rotation);

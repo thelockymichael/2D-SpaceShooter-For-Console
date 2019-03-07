@@ -12,6 +12,7 @@ public class MenuManager02 : MonoBehaviour
     public GameObject storyPanel;
     public GameObject mainMenuPanel;
     public GameObject optionsPanel;
+    public Text highScoreText;
 
     public EventSystem myEventSystem;
     public EventSystem myStorySystem;
@@ -33,6 +34,7 @@ public class MenuManager02 : MonoBehaviour
 
     private void Start()
     {
+        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         myStorySystem.enabled = false;
         myOptionsSystem.enabled = false;
         storyPanel.SetActive(false);

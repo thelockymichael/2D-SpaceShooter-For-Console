@@ -18,6 +18,8 @@ public class PauseMenuManager : MonoBehaviour
 
     public bool openMenu = false;
 
+    public bool GameIsPaused = false;
+
     public bool gameOverOpen = false;
 
     private float gameOverWait = 1.5f;
@@ -47,22 +49,20 @@ public class PauseMenuManager : MonoBehaviour
 
     }
 
-
-
     public void Restart()
     {
         StartCoroutine(disableArsenal());
-       // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1.0f;
     }
-
+    /*
     public void Resume()
     {
         StartCoroutine(disableArsenal());
         PauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
 
-    }
+    }*/
 
     IEnumerator disableArsenal()
     {
@@ -79,33 +79,6 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    public void Pause()
-    {
-    }
-
-    
-      /*
-        // PauseMenu.SetActive(true);
-        // Time.timeScale = 0.0f;
-        if (!openMenu && GameOverMenu)
-        {
-
-            openMenu = true;
-            PauseMenu.SetActive(true);
-            Time.timeScale = 0.0f;
-            //Pause();
-        }
-        else if (openMenu /*&& GameOverMenu*///)
-//        {
-   //         openMenu = false;
-  //          PauseMenu.SetActive(false);
-  //          Time.timeScale = 1.0f;
-  //          //Resume();
- //       }
-    
-
- 
-
     public void GameOver()
     {
         StartCoroutine(gameOverDelay());
@@ -121,7 +94,7 @@ public class PauseMenuManager : MonoBehaviour
         GameOverMenu.SetActive(true);
         StartCoroutine(highlightGameOverBtn());
 
-       // Time.timeScale = 0.0f;
+        // Time.timeScale = 0.0f;
     }
 
     IEnumerator highlightGameOverBtn()
@@ -140,12 +113,44 @@ public class PauseMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        var InputDevice = InputManager.ActiveDevice;
 
+        if (InputDevice.Command.WasPressed)
+        {
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
+    void Resume()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
+        GameIsPaused = false;
+
+    }
+
+    void Pause()
+    { 
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0.0f;
+        StartCoroutine(highlightBtn());
+        GameIsPaused = true;
+    }
+}
+
+
+        /*
         var InputDevice = InputManager.ActiveDevice;
 
         if (InputDevice.Command.WasPressed && !openMenu)
         {
+
             openMenu = true;
             PauseMenu.SetActive(true);
             Time.timeScale = 0.0f;
@@ -154,10 +159,11 @@ public class PauseMenuManager : MonoBehaviour
 
         else if (InputDevice.Command.WasPressed && openMenu)
         {
+
             openMenu = false;
             PauseMenu.SetActive(false);
             Time.timeScale = 1.0f;
         }
 
-    }
-}
+    }*/
+    

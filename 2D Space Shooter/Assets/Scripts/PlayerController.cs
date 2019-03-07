@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     {
         ++sumOfEnemies;
 
-        Debug.Log("Enemy: " + sumOfEnemies);
+        //Debug.Log("Enemy: " + sumOfEnemies);
 
         if (sumOfEnemies % 5 == 0)
         {
