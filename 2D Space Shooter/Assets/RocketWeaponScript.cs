@@ -15,7 +15,7 @@ public class RocketWeaponScript : MonoBehaviour
     public Collider explosionTrigger;
 
 
-    int damage = 20;
+    int damage = 200;
 
     private bool timeOut;
     private float timer;
@@ -106,7 +106,7 @@ public class RocketWeaponScript : MonoBehaviour
             Debug.Log("Boss took damage");
             bossScript.TakeDamage(damage);
             Destroy(this.gameObject);
-            Instantiate(explosion, transform.position, transform.rotation);
+           // Instantiate(explosion, transform.position, transform.rotation);
 
         }
     }

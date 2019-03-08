@@ -21,6 +21,8 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadLevel(int sceneIndex)
     {
+        Time.timeScale = 1.0f;
+
         Debug.Log("DO SOMETHING");
 
         StartCoroutine(delayLoading(sceneIndex));

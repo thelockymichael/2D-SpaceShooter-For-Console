@@ -89,6 +89,18 @@ public class DestroyByContact : MonoBehaviour
 
         if (other.tag == "Player" && isFirePower)
         {
+            if (playerController.FlameThrowerIsActive)
+            {
+                playerController.FlameThrowerIsActive = true;
+                playerController.GainFirePower();
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                playerController.GainFirePower();
+                Destroy(this.gameObject);
+                // Do nothing
+            }
             playerController.GainFirePower();
             Destroy(this.gameObject);
             /*
@@ -100,8 +112,18 @@ public class DestroyByContact : MonoBehaviour
 
         if (other.tag == "Player" && isFlameThrower)
         {
-            playerController.GainFlameThrower();
-            Destroy(this.gameObject);
+            if (playerController.FirePowerIsActive)
+            {
+                playerController.FirePowerIsActive = false;
+                playerController.GainFlameThrower();
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                playerController.GainFlameThrower();
+                Destroy(this.gameObject);
+                // Do nothing
+            }
             /*
             gameController.GameOver();
             PauseMenuManager.GameOver();

@@ -52,8 +52,7 @@ public class PauseMenuManager : MonoBehaviour
     public void Restart()
     {
         StartCoroutine(disableArsenal());
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1.0f;
+        //Time.timeScale = 1.0f;
     }
     /*
     public void Resume()
@@ -76,7 +75,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         StartCoroutine(disableArsenal());
         //SceneManager.LoadScene("mainMenu");
-        Time.timeScale = 1.0f;
+        //Time.timeScale = 1.0f;
     }
 
     public void GameOver()
@@ -129,6 +128,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     void Resume()
     {
+        StartCoroutine(disableArsenal());
         PauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPaused = false;

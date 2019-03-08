@@ -34,6 +34,8 @@ public class MenuManager02 : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1.0f;
+
         highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         myStorySystem.enabled = false;
         myOptionsSystem.enabled = false;
@@ -44,6 +46,13 @@ public class MenuManager02 : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("game");
+    }
+
+    public void ResetHiScore()
+    {
+        PlayerPrefs.DeleteKey("HighScore");
+        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+
     }
 
     public void Story()

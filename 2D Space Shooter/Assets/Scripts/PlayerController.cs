@@ -213,7 +213,13 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-      
+        /*
+        if (FlameThrowerIsActive && timer <= 5)
+        {
+           
+            FirePowerIsActive
+        }
+        */
 
         if (currentHealth <= 0 && !isDead)
         {
