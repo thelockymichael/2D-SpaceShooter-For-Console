@@ -95,6 +95,7 @@
     <Compile Include="Assets\PowerUpController.cs" />
     <Compile Include="Assets\PowerUpHealth.cs" />
     <Compile Include="Assets\RandomRotator.cs" />
+    <Compile Include="Assets\RedNebulaScript.cs" />
     <Compile Include="Assets\rocketAnim.cs" />
     <Compile Include="Assets\RocketWeaponScript.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

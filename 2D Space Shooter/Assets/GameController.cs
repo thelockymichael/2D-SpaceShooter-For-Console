@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public GameObject[] hazards;
 
     public GameObject boss;
+    public GameObject redNebulaBackground;
     public Transform bossSpawn;
     
     public Vector3 spawnValues;
@@ -146,8 +147,10 @@ public class GameController : MonoBehaviour
         while (true && !Boss)
         {
 
+           
+
             // bossEnemy = GameObject.FindWithTag("EnemyBoss");
-           // Debug.Log("Trying to find enemy boss.");
+            // Debug.Log("Trying to find enemy boss.");
 
             // gameController = gameControllerObject.GetComponent<GameController>();
             hazardCount += (WaveCounter * HazardCountIncrease);
@@ -172,23 +175,28 @@ public class GameController : MonoBehaviour
                     break;
                 }
 
-            if(WaveCounter % 4 == 0 && !Boss)
-            {
-                bossIncoming.text = "boss\nahead";
-                audio.clip = bossInComing;
-                audio.Play();
-                yield return new WaitForSeconds(2.5f);
-                audio.Stop();
-                audio.clip = musicClip;
-                audio.Play();
-                bossIncoming.text = "";
-                Boss = true;
-                Instantiate(boss, bossSpawn, bossSpawn);
-                Debug.Log("Wave counter is dividable by 4");
-                break;
+                if (WaveCounter % 3 == 0)
+                {
+                    Instantiate(redNebulaBackground, transform.position, transform.rotation);
+                }
+
+                if (WaveCounter % 4 == 0 && !Boss)
+                {
+                    bossIncoming.text = "boss\nahead";
+                    audio.clip = bossInComing;
+                    audio.Play();
+                    yield return new WaitForSeconds(2.5f);
+                    audio.Stop();
+                    audio.clip = musicClip;
+                    audio.Play();
+                    bossIncoming.text = "";
+                    Boss = true;
+                    Instantiate(boss, bossSpawn, bossSpawn);
+                    Debug.Log("Wave counter is dividable by 4");
+                    break;
+                }
             }
         }
-    }
   
 
     public void AddScore(int newScoreValue)

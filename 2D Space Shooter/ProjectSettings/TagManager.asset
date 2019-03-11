@@ -19,6 +19,7 @@ TagManager:
   - RocketAnim
   - Rocket
   - FlameThrower
+  - DamageImage
   layers:
   - Default
   - TransparentFX

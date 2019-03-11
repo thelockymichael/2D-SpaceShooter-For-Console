@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     private float timer;
     private float timeAgain = 10f;
 
-
     private float innerTimer;
 
     public float timeLimit;
@@ -102,6 +101,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    
 
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
         gameController = gameControllerObject.GetComponent<GameController>();
@@ -213,13 +213,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        /*
-        if (FlameThrowerIsActive && timer <= 5)
-        {
-           
-            FirePowerIsActive
-        }
-        */
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -227,17 +220,6 @@ public class PlayerController : MonoBehaviour
             Death();
         }
 
-        /*
-        if (FirePowerIsActive)
-        {
-            StartCoroutine(StopSpeedUpFirePower());
-        }
-        */
-
-        /*if (FlameThrowerIsActive)
-        {
-            StartCoroutine(StopSpeedUpFlameThrower());
-        }*/
 
         var InputDevice = InputManager.ActiveDevice;
 
@@ -245,7 +227,7 @@ public class PlayerController : MonoBehaviour
         if (fromPauseMenu)
         {
 
-            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive && !FlameThrowerIsActive))
+            if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && !FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
 
@@ -257,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && !FirePowerIsActive && FlameThrowerIsActive))
+            if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && !FirePowerIsActive && FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
 
@@ -271,7 +253,7 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            if (InputDevice.Action1.WasPressed && (Time.time > nextFire && FirePowerIsActive && !FlameThrowerIsActive))
+            if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
 
@@ -285,7 +267,7 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            else if (InputDevice.Action2.WasPressed)
+            else if ((InputDevice.Action2.WasPressed || Input.GetButton("Shoot Rocket")) && rocketShot)
             {
                 ShootRocket();
                 audio.Play();
@@ -318,14 +300,13 @@ public class PlayerController : MonoBehaviour
     {
         var InputDevice = InputManager.ActiveDevice;
 
-        float moveHorizontal = InputDevice.LeftStickY;
-        float moveVertical = InputDevice.LeftStickX;
+        float moveHorizontal = Input.GetAxis("Vertical");
+        float moveVertical = Input.GetAxis("Horizontal");
 
+        // float moveHorizontal = Input.GetAxis("Horizontal");
+        //  float moveVertical = Input.GetAxis("Vertical");
 
-       // float moveHorizontal = Input.GetAxis("Horizontal");
-      //  float moveVertical = Input.GetAxis("Vertical");
-
-       Vector3 movement = new Vector3(-moveHorizontal, 0.0f, moveVertical);
+        Vector3 movement = new Vector3(-moveHorizontal, 0.0f, moveVertical);
         rb.velocity = movement * speed;
 
         rb.position = new Vector3(
