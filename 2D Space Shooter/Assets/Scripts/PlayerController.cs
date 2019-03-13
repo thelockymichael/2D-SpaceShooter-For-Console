@@ -101,8 +101,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
-
+        // Etsii kyseiset GameObjectit
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
         gameController = gameControllerObject.GetComponent<GameController>();
 
@@ -113,6 +112,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    // Pelaaja ottaa vahinkoa ja laskee elämäpalkkia sen mukaan.
     public void TakeDamage(int amount)
     {
         // Set the damaged flag so the screen will flash.
@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Pelaaja saa elämäpisteitä ja sen elämäpalkkiin
     public void GainHealth(int amount)
     {
         // Set the damaged flag so the screen will flash.
@@ -139,6 +140,7 @@ public class PlayerController : MonoBehaviour
         healthSlider.value = currentHealth;
     }
 
+    // Pelaaja saa 5 sekunnin lisätulipäivityksen
     public void GainFirePower()
     {
         gameController.startPowerUpTimer = enabled;
@@ -147,6 +149,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Pelaaja saa 5 sekunnin liekinheitinpäivityksen
     public void GainFlameThrower()
     {
         gameController.startPowerUpTimer = enabled;
@@ -154,6 +157,7 @@ public class PlayerController : MonoBehaviour
         FlameThrowerIsActive = true;
     }
 
+    // Pelaaja kuolee ja peli päättyy yms.
     void Death()
     {
         // Set the death flag so this function won't be called again.
@@ -164,37 +168,26 @@ public class PlayerController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    // Molemmat seuraavat komennot ovat Power Upin päättymiselle
     IEnumerator StopSpeedUpFlameThrower()
     {
         yield return new WaitForSeconds(10.0f); // the number corresponds to the nuber of seconds the speed up will be applied
-        TimeOutFlameThrower();
-    }
-
-    IEnumerator StopSpeedUpFirePower()
-    {
-        yield return new WaitForSeconds(10.0f); // the number corresponds to the nuber of seconds the speed up will be applied
-        TimeOutFirePower();
-    }
-
-    void TimeOutFirePower()
-    {
-        //timeAgain = timeLimit;
-        FirePowerIsActive = false;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        timeOut = false;
-        Debug.Log(Mathf.Round(timeLimit));
-    }
-
-
-    void TimeOutFlameThrower()
-    {
-        //timeAgain = timeLimit;
         FlameThrowerIsActive = false;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         timeOut = false;
         Debug.Log(Mathf.Round(timeLimit));
     }
 
+    IEnumerator StopSpeedUpFirePower()
+    {
+        yield return new WaitForSeconds(10.0f); // the number corresponds to the nuber of seconds the speed up will be applied
+        FirePowerIsActive = false;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        timeOut = false;
+        Debug.Log(Mathf.Round(timeLimit));
+    }
+
+    // Amppuu raketin
     public void ShootRocket()
     {
         if (rocketShot)
@@ -205,6 +198,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Ottaa raketin kuvakkeen pois näkyvistä
     IEnumerator disableRocketIcon()
     {
         yield return new WaitForSeconds(0.5f);
@@ -214,6 +208,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 
+        // Jos elämäpisteitä on vähemmän kuin 0, pelaaja kuolee
         if (currentHealth <= 0 && !isDead)
         {
             // ... it should die.
@@ -226,7 +221,7 @@ public class PlayerController : MonoBehaviour
 
         if (fromPauseMenu)
         {
-
+            // Ampuu yhen laserin
             if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && !FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
@@ -239,6 +234,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
+            // Käyttää liekinheitintä
             if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && !FirePowerIsActive && FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
@@ -252,7 +248,7 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log(audio);
             }
 
-
+            // Käyttää 3 laseria
             if ((InputDevice.Action1.WasPressed || Input.GetButton("Shoot Laser")) && (Time.time > nextFire && FirePowerIsActive && !FlameThrowerIsActive))
             {
                 nextFire = Time.time + fireRate;
@@ -266,6 +262,7 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log(audio);
             }
 
+            // Hakee raketinampumisfunktion
 
             else if ((InputDevice.Action2.WasPressed || Input.GetButton("Shoot Rocket")) && rocketShot)
             {
@@ -300,6 +297,7 @@ public class PlayerController : MonoBehaviour
     {
         var InputDevice = InputManager.ActiveDevice;
 
+        // Pelaajan liikkumiskontrollit
         float moveHorizontal = Input.GetAxis("Vertical");
         float moveVertical = Input.GetAxis("Horizontal");
 
@@ -309,6 +307,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(-moveHorizontal, 0.0f, moveVertical);
         rb.velocity = movement * speed;
 
+        // Rajaa pelaajan liikkuvuuden peliympäristössä
         rb.position = new Vector3(
             Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
             0.0f,

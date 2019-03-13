@@ -65,11 +65,14 @@ public class GameController : MonoBehaviour
         rocketIcon.SetActive(false);
         AudioSource audio = GetComponent<AudioSource>();
 
+        //Löytää PlayerControllerin
         GameObject playerControllerObject = GameObject.FindWithTag("Player");
         playerController = playerControllerObject.GetComponent<PlayerController>();
 
         gameOver = false;
         restart = false;
+
+        // Asettaa tekstit tyhjäksi
         restartText.text = "";
         newHighScoreText.text = "";
         gameOverText.text = "";
@@ -80,15 +83,19 @@ public class GameController : MonoBehaviour
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
+        // Hakee tämänhetkisen ennätyksen. Jos sitä ei ole, aloittaa nollasta.
         highScoreText.text = "Hiscore: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
 
+    // Näyttää raketin kuvakkeen, kun pelaaja on tuhonnut 5 vihollisalusta
     public void ShowRocketIcon()
     {
         playerController.rocketShot = true;
         rocketIcon.SetActive(true);
 
     }
+
+    // Piilottaa raketin kuvakkeen, kun pelaaja on käyttänyt rakettinsa
     public void DisableRocketIcon()
     {
         rocketIcon.SetActive(false);
@@ -97,6 +104,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        // Jos Power Upin saamisesta on kulunut 5 sekuntia, pelaaja palaa normaaliin tilaan.
         if (powerUpTimeOut)
         {
             Debug.Log("TIME OUT");
@@ -111,6 +119,7 @@ public class GameController : MonoBehaviour
         }
         // return lat > 0 ? 'summer' : 'winter';
 
+        // Aloittaa laskemisen siitä hetkestä, kun pelaaja koskee Power Uppiin
         if (startPowerUpTimer)
         {
             
@@ -127,16 +136,9 @@ public class GameController : MonoBehaviour
 
         }
 
-
-        if (restart)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-
-            }
-        }
     }
 
+    // Funktio, jonka sisällä on silmukka, joka lisää vihollisia ja 'bosseja' siihen asti kunnes pelaaja kuolee.
    public IEnumerator SpawnWaves()
     {
         waveCounter.text = "Wave: " + WaveCounter.ToString();
@@ -198,26 +200,29 @@ public class GameController : MonoBehaviour
             }
         }
   
-
+    // Lisää pisteitä sitä mukaa, kun pelaaja tuhoaa asteroideja, vihollisia yms.
     public void AddScore(int newScoreValue)
     {
         score += newScoreValue;
         UpdateScore();
     }
 
+    // Päivittää pistemäärän
     void UpdateScore()
     {
         scoreText.text = "Score: " + score.ToString();
     }
 
+    // Peli päättyy
     public void GameOver()
     {
         gameOverText.text = "game over";
         gameOver = true;
         scoreText.text = "Score: " + score.ToString();
-
+        // Jos pistemäärä on suurempi kuin ennätys, asettaa uuden ennätyksen
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
+            // Päivittää tuloksen tekstiin
             PlayerPrefs.SetInt("HighScore", score);
             highScoreText.text = "Hiscore : " + score.ToString();
             newHighScoreText.text = "New High \nScore!";

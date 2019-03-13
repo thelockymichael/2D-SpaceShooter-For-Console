@@ -49,33 +49,22 @@ public class DestroyByContact : MonoBehaviour
         }*/
     }
 
-    public void enemiesExplode()
-    {
-        Instantiate(this.explosionForDestroyAllPowerUp, this.transform.position, this.transform.rotation);
-        Destroy(this.gameObject);
-    }
-
     public void OnTriggerEnter(Collider other)
     {
+        // Jos pelikentän sisällä on asteroideja, vihollisia, 'bosseja', Power Uppeja eli Enemy tai raketteja, älä tee MITÄÄN!!!
         if (other.tag == "Boundary" || other.CompareTag ("Asteroid") || other.CompareTag("EnemyBoss") || other.CompareTag("EnemyShip") || other.CompareTag("Enemy") || other.CompareTag("Rocket"))
         {
             return;
         }
 
+        // Jos räjähdysefekti on olemassa tai on Pelaaja, luo räjähdys
         if(explosion != null || other.tag == "Player")
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
 
-        if (other.tag == "FlameThrower")
-        {
-            gameController.AddScore(scoreValue);
-            Instantiate(explosion, transform.position, transform.rotation);
-            Destroy(this.gameObject);
-            return;
-            
-        }
 
+        // Jos tässä GameObjectin DestroyByContact-scriptissä on isPowerUpHealth bool-totuusarvo päällä ja pelaaja koskee tähän, niin pelaaja saa 20 elämäpistettä.
         if (other.tag == "Player" && isPowerUpHealth)
         {
             playerController.GainHealth(healthBonus);
@@ -87,6 +76,7 @@ public class DestroyByContact : MonoBehaviour
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
         }
 
+        // Jos tässä GameObjectin DestroyByContact-scriptissä on isFirePower bool-totuusarvo päällä ja pelaaja koskee tähän, niin pelaaja viideks sekunniks lisätulipäivityksen.
         if (other.tag == "Player" && isFirePower)
         {
             if (playerController.FlameThrowerIsActive)
@@ -110,6 +100,8 @@ public class DestroyByContact : MonoBehaviour
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
         }
 
+        // Jos tässä GameObjectin DestroyByContact-scriptissä on isFlameThrower bool-totuusarvo päällä ja pelaaja koskee tähän, niin pelaaja viideks sekunniks liekinheitinpäivityksen.
+
         if (other.tag == "Player" && isFlameThrower)
         {
             if (playerController.FirePowerIsActive)
@@ -131,6 +123,7 @@ public class DestroyByContact : MonoBehaviour
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
         }
 
+        // Jos tässä GameObjectin DestroyByContact-scriptissä on isDestroyAll bool-totuusarvo päällä ja pelaaja koskee tähän, kaikki asiat pelikentältä tuhoutuvat.
         if (other.tag == "Player" && isDestroyAll)
         {
             boundaryController.destroyAll = true;
@@ -141,7 +134,8 @@ public class DestroyByContact : MonoBehaviour
             Destroy(other.gameObject);
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
         }
-
+        
+        // Jos vihollinen, asteroidi tai jokin vastaava osuu pelajaan, pelajaa ottaa vahkinkoa.
         if (other.tag == "Player")
         {
             playerController.TakeDamage(attackDamage);
@@ -154,6 +148,7 @@ public class DestroyByContact : MonoBehaviour
         }
 
      
+        // Muissa tapauksissa anna pisteitä ja tuhoa skeidaa.
         else
         {
             gameController.AddScore(scoreValue);
